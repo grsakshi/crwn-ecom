@@ -6,7 +6,7 @@ import React from 'react';
 
 import './collection-item.styles.css';
 
-const CollectionItem = ({id, name, price, imageUrl}) => {
+const CollectionItem = ({name, price, imageUrl}) => {
     // const dispatch = useDispatch();
     return(
         <div className='collection-item'>
