@@ -1,6 +1,4 @@
-import styled, {css} from 'styled-components';
-
-const buttonStyles = css`
+/* const buttonStyles = css`
     background-color: black;
     color: white;
     border: none;
@@ -39,9 +37,9 @@ const getButtonStyles = props => {
         return googleSignInStyles;
     }
     return props.inverted ? invertedButtonStyles : buttonStyles;
-}
+} */
 
-export const CustomButtonContainer = styled.button`
+.custom-button{
     min-width: 165px;
     width: auto;
     height: 50px;
@@ -55,6 +53,4 @@ export const CustomButtonContainer = styled.button`
     cursor: pointer;
     display: flex;
     justify-content: center;
-
-    ${getButtonStyles}
-`;
+}
