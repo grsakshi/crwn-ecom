@@ -8,13 +8,13 @@ import { auth } from '../../firebase/firebase.utils';
 // import CartIcon from '../cart-icon/cart-icon.component';
 // import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './header.styles.css';
 
 
-const Header = ({ currentUser }) => {
-    // const currentUser = useSelector(state => state.user.currentUser);
+const Header = () => {
+    const currentUser = useSelector(state => state.user.currentUser);
     // const hidden = useSelector(state => state.cart.hidden);
     return(
         <div className="header">

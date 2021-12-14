@@ -1,33 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router';
-import './App.css';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from './redux/user/user.actions';
 import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import './App.css';
 
 function App() {
-
-  const [currentUser, setCurrentUser] = useState(null);
-
+  const dispatch = useDispatch();
   useEffect(() => {
+    // Whenever we call the onAuthStateChanged or onSnapshot methods from auth library or referenceObject, we get back a function that lets us unsubscribe from the listener we just instantiated
     const unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if(userAuth){
         // we return userRef object from createUserProfileDocument function to see if data is modified in that document or not
         const userRef = await createUserProfileDocument(userAuth);
         
         // // This onSnapshot is basically like onAuthStateChanged
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser(state => ({
-            ...state,
-            id: snapShot.id,
-            ...snapShot.data()
-          }));
-        });
-      } else {
-        setCurrentUser(null);
+        userRef.onSnapshot(snapShot => 
+          dispatch(
+            setCurrentUser({
+              id: snapShot.id,
+              ...snapShot.data()
+            })
+          )
+        );
       }
+      dispatch(setCurrentUser(userAuth));
     });
     
     // what does cleanup do?
@@ -37,7 +38,7 @@ function App() {
 
   return (
     <div>
-      <Header currentUser={currentUser} />
+      <Header />
       <Switch>
         {/* switch will stop after one route is matched and not check after that */}
         <Route exact path='/' component={HomePage} />
