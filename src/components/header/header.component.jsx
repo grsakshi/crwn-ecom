@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 
-// import { auth } from '../../firebase/firebase.utils';
+import { auth } from '../../firebase/firebase.utils';
 
 // import CartIcon from '../cart-icon/cart-icon.component';
 // import CartDropdown from "../cart-dropdown/cart-dropdown.component";
@@ -13,7 +13,7 @@ import { ReactComponent as Logo } from "../../assets/crown.svg";
 import './header.styles.css';
 
 
-const Header = () => {
+const Header = ({ currentUser }) => {
     // const currentUser = useSelector(state => state.user.currentUser);
     // const hidden = useSelector(state => state.cart.hidden);
     return(
@@ -28,12 +28,12 @@ const Header = () => {
                 <Link className="option" to='/shop'>
                     CONTACT
                 </Link>
-                {/* {
+                {
                     currentUser? 
-                    <OptionLink as='div' onClick={() => auth.signOut()}>SIGN OUT</OptionLink> 
+                    <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div> 
                     : 
-                    <OptionLink to='/signin'>SIGN IN</OptionLink>
-                } */}
+                    <Link className='option' to='/signin'>SIGN IN</Link>
+                }
                 {/* <CartIcon /> */}
             </div>
             {/* {
