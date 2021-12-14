@@ -5,22 +5,36 @@ import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
-  let unsubscribeFromAuth = () => null;
 
   useEffect(() => {
-    unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      setCurrentUser(user);
-      console.log(user);
+    const unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if(userAuth){
+        // we return userRef object from createUserProfileDocument function to see if data is modified in that document or not
+        const userRef = await createUserProfileDocument(userAuth);
+        
+        // // This onSnapshot is basically like onAuthStateChanged
+        userRef.onSnapshot(snapShot => {
+          setCurrentUser(state => ({
+            ...state,
+            id: snapShot.id,
+            ...snapShot.data()
+          }));
+        });
+      } else {
+        setCurrentUser(null);
+      }
     });
-    return () => {
-      unsubscribeFromAuth();
-    }
-  }, [currentUser]);
+    
+    // what does cleanup do?
+    return () => unsubscribeFromAuth();
+  }, []);
+
+  console.log(currentUser);
 
   return (
     <div>
