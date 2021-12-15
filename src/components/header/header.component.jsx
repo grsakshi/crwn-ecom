@@ -5,8 +5,8 @@ import { ReactComponent as Logo } from "../../assets/crown.svg";
 
 import { auth } from '../../firebase/firebase.utils';
 
-// import CartIcon from '../cart-icon/cart-icon.component';
-// import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
 import { useSelector } from 'react-redux';
 
@@ -15,7 +15,7 @@ import './header.styles.css';
 
 const Header = () => {
     const currentUser = useSelector(state => state.user.currentUser);
-    // const hidden = useSelector(state => state.cart.hidden);
+    const hidden = useSelector(state => state.cart.hidden);
     return(
         <div className="header">
             <Link className="logo-container" to='/'>
@@ -34,11 +34,11 @@ const Header = () => {
                     : 
                     <Link className='option' to='/signin'>SIGN IN</Link>
                 }
-                {/* <CartIcon /> */}
+                <CartIcon />
             </div>
-            {/* {
-                hidden ? null: <CartDropdown />
-            } */}
+            {
+                hidden ? null : <CartDropdown />
+            }
         </div>
     );
 }

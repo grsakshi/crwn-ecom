@@ -33,7 +33,7 @@ function App() {
     
     // what does cleanup do?
     return () => unsubscribeFromAuth();
-  }, []);
+  }, [dispatch]);
 
   const currentUser = useSelector(state => state.user.currentUser);
 
