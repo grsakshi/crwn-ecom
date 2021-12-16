@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-// import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
+import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import './checkout.style.css';
 
@@ -44,7 +44,7 @@ const CheckoutPage = () => {
                 <br/>
                 4242 4242 4242 4242 - Exp: Any future date Eg. 01/25 - CVV: 123
             </div>
-            {/* <StripeCheckoutButton className="checkout-button" price={total}/> */}
+            <StripeCheckoutButton price={total}/>
         </div>
     );
 }
