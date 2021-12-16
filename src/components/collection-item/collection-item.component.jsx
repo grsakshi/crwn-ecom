@@ -5,11 +5,11 @@ import {addItem} from '../../redux/cart/cart.actions';
 
 import './collection-item.styles.css';
 
-const CollectionItem = ({item}) => {
+const CollectionItem = ({item, specific}) => {
     const dispatch = useDispatch();
     const { name, price, imageUrl } = item;
     return(
-        <div className='collection-item'>
+        <div className={`${specific ? 'margin' : ''} collection-item`}>
             <div 
                 className='image'
                 style={{

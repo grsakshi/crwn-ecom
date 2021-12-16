@@ -11,6 +11,10 @@
   position: relative;
 }
 
+.margin {
+  margin-bottom: 30px;
+}
+
 .custom-item-button {
   display: none;
   width: 80%;
