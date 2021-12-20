@@ -1,31 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { updateCollections } from '../../redux/shop/shop.actions.js';
+import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions.js';
 import CollectionPage from '../collection/collection.component';
 import WithSpinner from '../../components/with-spinner/with-spinner.component.jsx';
-import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
 import CollectionOverview from '../../components/collections-overview/collections-overview.component';
 
 const ShopPage = ({match}) => {
-    const [isLoading, setIsLoading] = useState(true);
+    const isFetching = useSelector(state => state.shop.isFetching);
+    const isCollectionLoaded = useSelector(state => !!state.shop.collections);
     const dispatch = useDispatch();
     useEffect(() => {
-        const collectionRef = firestore.collection('collections');
-        const unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-            const collectionMap = convertCollectionsSnapshotToMap(snapshot);
-            dispatch(updateCollections(collectionMap));
-            setIsLoading(false);
-        })
-        return () => unsubscribeFromSnapshot();
+        dispatch(fetchCollectionsStartAsync());
     }, [dispatch]);
     return (
         <div className="shop-page">
+            {/* doubt: should I use container pattern here for these routes or not to separate the loading 
+            states from shop component as we need it to not be concerned about stuff like that */}
             <Route 
                 exact 
                 path={`${match.path}`} 
                 component={
-                    isLoading 
+                    isFetching 
                     ? WithSpinner 
                     : CollectionOverview
                 } 
@@ -33,9 +29,11 @@ const ShopPage = ({match}) => {
             <Route 
                 path={`${match.path}/:collectionId`} 
                 component={
-                    isLoading
-                    ? WithSpinner
-                    : CollectionPage
+                    // why we used this instead of isFetching? Because collection page component directly takes the state to display it. If it is rendered before the shop component
+                    // and there is delay in loading due to async then our component will give error as it takes fetching value as false. So we need to know if collection is actually loaded or not 
+                    isCollectionLoaded
+                    ? CollectionPage
+                    : WithSpinner
                 } 
             />
         </div>
