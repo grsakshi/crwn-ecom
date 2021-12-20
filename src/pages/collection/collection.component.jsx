@@ -4,7 +4,7 @@ import './collection.styles.css';
 
 const CollectionPage = ({match}) => {
     //this selector returns the item matching the params and we destructure it directly
-    const {title, items} = useSelector(state => state.shop.collections[match.params.collectionId]); 
+    const { title, items } = useSelector(state => state.shop.collections[match.params.collectionId]); 
 
     return (
         <div className="collection-page">

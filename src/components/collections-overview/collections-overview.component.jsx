@@ -7,7 +7,9 @@ import CollectionPreview from '../collection-preview/collection-preview.componen
 import './collections-overview.styles.css';
 
 const CollectionOverview = () =>{ 
-    const collections = useSelector(state => Object.keys(state.shop.collections).map(key => state.shop.collections[key]));
+    const collections = useSelector(state => (
+        state.shop.collections ? Object.keys(state.shop.collections).map(key => state.shop.collections[key]) : []
+    ));
     return(
         <div className='collection-overview'>
             {
