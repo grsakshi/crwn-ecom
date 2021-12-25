@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions.js';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 import CollectionPage from '../collection/collection.component';
 import WithSpinner from '../../components/with-spinner/with-spinner.component.jsx';
 import CollectionOverview from '../../components/collections-overview/collections-overview.component';
@@ -11,7 +11,7 @@ const ShopPage = ({match}) => {
     const isCollectionLoaded = useSelector(state => !!state.shop.collections);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchCollectionsStartAsync());
+        dispatch(fetchCollectionsStart());
     }, [dispatch]);
     return (
         <div className="shop-page">
