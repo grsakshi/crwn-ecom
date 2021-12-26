@@ -1,10 +1,12 @@
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import { useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
 import './collection.styles.css';
 
-const CollectionPage = ({match}) => {
+const CollectionPage = () => {
+    const {collectionId} = useParams();
     //this selector returns the item matching the params and we destructure it directly
-    const { title, items } = useSelector(state => state.shop.collections[match.params.collectionId]); 
+    const { title, items } = useSelector(state => state.shop.collections[collectionId]); 
 
     return (
         <div className="collection-page">
