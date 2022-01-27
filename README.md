@@ -10,4 +10,4 @@ Then go to the folder that the repository got cloned into and use this command:
 npm install
 ```
 ## Deployed Version
-[Crwn Ecom](https://crwn-ecom.vercel.app/)
+[Crwn Ecom](https://crwn-sak.herokuapp.com/)
